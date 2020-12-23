@@ -36,11 +36,11 @@ class CustomerController extends Controller
         $no_last_name = count($customers->filter(function ($item) { return empty($item->last_name);}));
         $no_gender = count($customers->filter(function ($item) { return empty($item->gender);}));
         $duplicated = $total - $unique;
-        $per_unique = floor($unique/$total*100);
-        $per_duplicated = floor($duplicated/$total*100);
-        $per_no_email = floor($no_email/$total*100);
-        $per_no_last_name = floor($no_last_name/$total*100);
-        $per_no_gender = floor($no_gender/$total*100);
+        $per_unique = $total == 0 ? 0 : floor($unique/$total*100);
+        $per_duplicated = $total == 0 ? 0 : floor($duplicated/$total*100);
+        $per_no_email = $total == 0 ? 0 : floor($no_email/$total*100);
+        $per_no_last_name = $total == 0 ? 0 : floor($no_last_name/$total*100);
+        $per_no_gender = $total == 0 ? 0 : floor($no_gender/$total*100);
 
         $dashboard = collect([ 	'total' => $total,
                                 'unique' => $unique,
