@@ -20,8 +20,8 @@ class ImportCustomerController extends Controller
     protected function import(Request $request): array
     {
         $ret = $this->validateImport();
-    
-        if ($ret){
+            
+        if (!$ret){
             return $ret;
         }
         else{
@@ -48,7 +48,7 @@ class ImportCustomerController extends Controller
     protected function validateImport()
     {
         return request()->validate([
-            'csv_file' => ['required', 'mimes:csv'],
+            'csv_file' => ['required', 'mimes:csv,txt'],
             ]);
     }
 
