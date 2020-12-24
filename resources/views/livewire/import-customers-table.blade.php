@@ -71,7 +71,7 @@
 
             <div class="row mb-4">
                 <div class="col text-center">
-                    {{ $importCustomers->links('pagination') }}
+                    {{ $importCustomers->links('pagination-bootstrap') }}
                 </div>
             </div>
         </div>
