@@ -25,8 +25,9 @@ class ImportCustomerController extends Controller
             return $ret;
         }
         else{
+            $this->importCustomerArray['store'] = $request->file('csv_file')->store('csv');
+            $this->importCustomerArray['path']=storage_path('app/public').'/'.$this->importCustomerArray['store'];
             $this->importCustomerArray['user_id'] = $request->user_id;
-            $this->importCustomerArray['path'] = $request->file('csv_file')->getRealPath();
             $this->importCustomerArray['header'] = '1';
             $this->importCustomerArray['filename'] = $request->file('csv_file')->getClientOriginalName();
             $this->customerImport = new CustomersImport;
