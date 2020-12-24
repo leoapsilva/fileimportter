@@ -5,8 +5,6 @@ Tiny application to show how to import CSV to database using Laravel.
 * Undo a file import removing the rows on database
 * Remove duplicate rows
 * Prevent import duplicate rows
-* Create a Service Provider to import a file for any model
-  * Just create the model mapping
   
 # Thanks
 * Medialoot for free Lumino Theme
