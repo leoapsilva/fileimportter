@@ -19,7 +19,7 @@ class ImportCustomerController extends Controller
      */
     protected function import(Request $request): array
     {
-        $ret = $this->validateImport();
+        $ret = $this->validateImportFile();
             
         if (!$ret){
             return $ret;
@@ -42,11 +42,11 @@ class ImportCustomerController extends Controller
     }
 
     /**
-     * validateImport function
+     * validateImportFile function
      *
      * @return void
      */
-    protected function validateImport()
+    protected function validateImportFile()
     {
         return request()->validate([
             'csv_file' => ['required', 'mimes:csv,txt'],
@@ -97,58 +97,5 @@ class ImportCustomerController extends Controller
         return view('import-customers.show', [
             'importCustomer' => $importCustomer,
         ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\ImportCustomer  $importCustomer
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ImportCustomer $importCustomer)
-    {
-        return view('import-customers.edit', [
-            'importCustomer' => $importCustomer,
-        ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ImportCustomer  $importCustomer
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, ImportCustomer $importCustomer)
-    {
-        $importCustomer->update($this->validateImport());
-
-        return redirect('/import-customers');
-    }
-    
-    /**
-     * Delete the specified resource in storage
-     *
-     * @param ImportCustomer $importCustomer
-     * @return void
-     */
-    public function delete(ImportCustomer $importCustomer)
-    {
-        return view('import-customers.delete', [
-            'importCustomer' => $importCustomer,
-        ]);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\ImportCustomer  $importCustomer
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(ImportCustomer $importCustomer)
-    {
-        $importCustomer->delete();
-        
-        return redirect('/import-customers');
     }
 }
