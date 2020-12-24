@@ -11,5 +11,7 @@ return [
 
     'dashboard' => 'Painel',
     'customers' => 'Clientes',
-    'import-customers'   => 'Importação',
+    'import-files'   => 'Importar Arquivos',
+    'send' => 'Enviar',
+    'back' => 'Voltar',
 ];

@@ -4,7 +4,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            @livewire('import-customers-table')
+            @livewire('import-files-table')
         </div>
     </div><!--/.row-->
 @endsection

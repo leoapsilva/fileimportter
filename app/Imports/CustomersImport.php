@@ -20,7 +20,8 @@ class CustomersImport implements ToModel, WithHeadingRow, WithUpserts, WithChunk
     public function model(array $row)
     {
         ++$this->rowCount;
-        array_push($this->rows, $row);
+        
+        $this->rows[] = $row;
 
         return new Customer([
             'first_name'    => $row['first_name'],

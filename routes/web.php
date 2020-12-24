@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\ImportCustomerController;
+use App\Http\Controllers\ImportFileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,20 +58,20 @@ Route::get('/customers/{customer}/delete', [CustomerController::class, 'delete']
 
 
 // Import Customer Routes
-Route::get('/import-customers/create', [ImportCustomerController::class, 'create'])
-    ->name('import-customers.create')
+Route::get('/import-files/create', [ImportFileController::class, 'create'])
+    ->name('import-files.create')
     ->middleware('auth');
 
-Route::get('/import-customers', [ImportCustomerController::class, 'index'])
-    ->name('import-customers.index')
+Route::get('/import-files', [ImportFileController::class, 'index'])
+    ->name('import-files.index')
     ->middleware('auth');
 
-Route::post('/import-customers', [ImportCustomerController::class, 'store'])
-    ->name('import-customers.store')
+Route::post('/import-files', [ImportFileController::class, 'store'])
+    ->name('import-files.store')
     ->middleware('auth');
 
-Route::get('/import-customers/{customer}', [ImportCustomerController::class, 'show'])
-    ->name('import-customers.show')
+Route::get('/import-files/{customer}', [ImportFileController::class, 'show'])
+    ->name('import-files.show')
     ->middleware('auth');
 
 

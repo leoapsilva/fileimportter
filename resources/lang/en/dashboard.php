@@ -11,7 +11,7 @@ return [
 
     'dashboard' => 'Dashboard',
     'customers' => 'Customers',
-    'import-customers'   => 'Uploads',
+    'import-files'   => 'Uploads',
     'duplicated' => "Duplicated",
     'unique' => "Unique",
     'no_last_name' => "Empty Lastname",

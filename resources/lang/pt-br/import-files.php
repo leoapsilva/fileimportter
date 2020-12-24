@@ -8,5 +8,5 @@ return [
     'actions' => 'Ações',
     'user_id' => 'Usuário',
     'count' => 'Registros',
-
+    'model' => 'Tipo',
 ];

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 
-class ImportCustomer extends Model
+class ImportFile extends Model
 {
     use HasFactory;
 
@@ -16,7 +16,7 @@ class ImportCustomer extends Model
 
     protected $fillable = [
         'filename',
-        'header',
+        'model',
         'count',
         'data',
         'user_id',
@@ -25,7 +25,7 @@ class ImportCustomer extends Model
     public static function search($query)
     {
         return empty($query) ? static::query()
-            : static::join('users', 'import_customers.user_id', '=', 'users.id')
+            : static::join('users', 'import_files.user_id', '=', 'users.id')
                 ->orwhere('users.name', 'like', '%'.$query.'%')
                 ->orWhere('filename', 'like', '%'.$query.'%');
     }
