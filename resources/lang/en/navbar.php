@@ -11,5 +11,7 @@ return [
 
     'dashboard' => 'Dashboard',
     'customers' => 'Customers',
-    'import-customers'   => 'Uploads',
+    'import-files'   => 'Import Files',
+    'send' => 'Send',
+    'back' => 'Back',
 ];

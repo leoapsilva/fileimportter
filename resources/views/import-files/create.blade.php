@@ -14,13 +14,28 @@
                 </div>
                 <div class="panel-body">
 
-                    <form class="form-horizontal" action="/import-customers" method="POST" enctype="multipart/form-data">
+                    <form class="form-horizontal" action="/import-files" method="POST" enctype="multipart/form-data">
                         @csrf
                         
                         <fieldset>
+                            <!-- Model input -->
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="model"> {{ __('import-files.model') }} </label>
+                                <div class="col-md-9 {{ $errors->first('model') ? 'form-group has-error' : ''}}">
+                                    <select id="model" name="model" class="form-control" required>
+                                        @foreach ($models as $model)
+                                            <option value="{{ $model }}">{{ $model }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('model')
+                                    <div class="alert alert-danger"> {{ __($message) }} </div>
+                                    @enderror
+                                </div>
+                            </div>
+
                             <!-- File input-->
                             <div class="form-group">
-                                <label class="col-md-3 control-label" for="csv_file"> {{ __('import-customers.filename') }} </label>
+                                <label class="col-md-3 control-label" for="csv_file"> {{ __('import-files.filename') }} </label>
                                 <div class="col-md-9 {{ $errors->first('csv_file') ? 'form-group has-error' : ''}}">
                                     <input id="csv_file" name="csv_file" type="file" placeholder="" class="form-control" required>
                                     @error('csv_file')
@@ -38,10 +53,10 @@
                                     <div class="col-md-10 widget-left">
                                     </div>
                                     <div class="col-md-1 widget-right">
-                                        <button type="button" class="btn btn-warning btn-md pull-left" onclick="location.href='/customers'">Voltar</button>
+                                        <button type="button" class="btn btn-warning btn-md pull-left" onclick="location.href='/import-files'">{{ __("navbar.back") }}</button>
                                     </div>
 
-                                    <button type="submit" class="btn btn-success btn-md pull-right">Enviar</button>
+                                    <button type="submit" class="btn btn-success btn-md pull-right">{{ __("navbar.send" ) }}</button>
                                 </div>
                             </div>
                         </fieldset>

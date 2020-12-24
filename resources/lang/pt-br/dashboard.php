@@ -11,7 +11,7 @@ return [
 
     'dashboard' => 'Painel',
     'customers' => 'Clientes',
-    'import-customers'   => 'Importações',
+    'import-files'   => 'Importações',
     'duplicated' => "Duplicados",
     'unique' => "Únicos",
     'no_last_name' => "Sem Sobrenome",

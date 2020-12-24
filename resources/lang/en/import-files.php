@@ -8,4 +8,5 @@ return [
     'actions' => 'Actions',
     'user_id' => 'User',
     'count' => 'Row Count',
+    'model' => 'Model',
 ];

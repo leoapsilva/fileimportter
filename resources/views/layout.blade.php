@@ -52,7 +52,7 @@
 
         <ul class="nav menu">
             <li class="{{ str_contains(Request::path(), 'customers') ? 'active' : '' }}" id="customers"><a href="/customers"><em class="fa fa-user-circle-o">&nbsp;</em> {{ __("navbar.customers") }} </a></li>
-            <li class="{{ str_contains(Request::path(), 'import-customers') ? 'active' : '' }}" id="import-customers"><a href="/import-customers"><em class="fa fa-upload">&nbsp;</em> {{ __("navbar.import-customers") }} </a></li>
+            <li class="{{ str_contains(Request::path(), 'import-files') ? 'active' : '' }}" id="import-files"><a href="/import-files"><em class="fa fa-upload">&nbsp;</em> {{ __("navbar.import-files") }} </a></li>
             <li><a href="{{ route('logout') }}"
                 onclick="event.preventDefault();
                               document.getElementById('logout-form').submit();">

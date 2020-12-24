@@ -4,9 +4,9 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\ImportCustomer;
+use App\Models\ImportFile;
 
-class ImportCustomersTable extends Component
+class ImportFilesTable extends Component
 {
     use WithPagination;
 
@@ -28,8 +28,8 @@ class ImportCustomersTable extends Component
 
     public function render()
     {
-        return view('livewire.import-customers-table', [
-            'importCustomers' => ImportCustomer::search($this->search)
+        return view('livewire.import-files-table', [
+            'importFiles' => ImportFile::search($this->search)
                 ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
                 ->paginate($this->perPage),
         ]);
