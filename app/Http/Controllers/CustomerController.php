@@ -3,62 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
-use Illuminate\Http\Request;
+use App\Http\Requests\CustomerRequest;
 
 class CustomerController extends Controller
 {
-    /**
-     * Validate Customer
-     *
-     * @return void
-     */
-    protected function validateCustomer()
-    {
-        return request()->validate([
-            'first_name' => ['required', 'max:50'],
-            'last_name' => ['nullable', 'string', 'max:255'],
-            'email' => ['nullable','string', 'email', 'max:255', 'unique:users'],
-            'gender' => ['nullable','string', 'max:25'],
-            'ip_address' => ['nullable','ipv4'],
-            'company' => ['nullable','string', 'max:50'],
-            'city' => ['nullable','string', 'max:50'],
-            'title' => ['nullable','string', 'max:15'],
-            'website' => ['nullable','active_url', 'max:255'],
-            ]);
-    }
-
-    protected function buildDashboard()
-    {
-        $customers = Customer::all();
-        $total = count($customers);
-        $unique = count($customers->unique(function ($item) { return $item['first_name'].$item['last_name'].$item['email'].$item['company'].$item['city'].$item['gender']; }));
-        $no_email = count($customers->filter(function ($item) { return empty($item->email);}));
-        $no_last_name = count($customers->filter(function ($item) { return empty($item->last_name);}));
-        $no_gender = count($customers->filter(function ($item) { return empty($item->gender);}));
-        $duplicated = $total - $unique;
-        $per_unique = $total == 0 ? 0 : floor($unique/$total*100);
-        $per_duplicated = $total == 0 ? 0 : floor($duplicated/$total*100);
-        $per_no_email = $total == 0 ? 0 : floor($no_email/$total*100);
-        $per_no_last_name = $total == 0 ? 0 : floor($no_last_name/$total*100);
-        $per_no_gender = $total == 0 ? 0 : floor($no_gender/$total*100);
-
-        $dashboard = collect([ 	'total' => $total,
-                                'unique' => $unique,
-                                'duplicated' => $duplicated,
-                                'no_email' =>  $no_email,
-                                'no_last_name' => $no_last_name,	
-                                'no_gender' => $no_gender,
-                                'per_unique' => $per_unique,
-                                'per_duplicated' => $per_duplicated,
-                                'per_no_email' =>  $per_no_email,
-                                'per_no_last_name' => $per_no_last_name,	
-                                'per_no_gender' => $per_no_gender,
-                                
-        ]);	
-
-        return $dashboard;
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -66,9 +14,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $dashboard = $this->buildDashboard();
-        
-        return view('customers.index')->with(compact('dashboard'));
+        return view('customers.index', ['dashboard' => (new Customer)->buildDashboard()]);
     }
 
     /**
@@ -87,9 +33,9 @@ class CustomerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CustomerRequest $request)
     {
-        Customer::create($this->validateCustomer());
+        Customer::create($request->validated());
 
         return redirect('/customers');
     }
@@ -128,9 +74,9 @@ class CustomerController extends Controller
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Customer $customer)
+    public function update(CustomerRequest $request, Customer $customer)
     {
-        $customer->update($this->validateCustomer());
+        $customer->update($request->validated());
         
         return redirect('/customers');
     }

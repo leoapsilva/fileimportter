@@ -4,8 +4,9 @@ namespace App\Imports;
 
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use ACFBentveld\XML\XML;
 
-trait ImportCSVFile
+trait FileImporter
 {
     private $importFileArray;
     private $modelImport;
@@ -30,12 +31,20 @@ trait ImportCSVFile
             $this->ImportFileArray['user_id'] = $request->user_id;
             $this->ImportFileArray['model'] = $request->model;
             $this->ImportFileArray['filename'] = $request->file('csv_file')->getClientOriginalName();
-            
-            Excel::import($this->modelImport, $this->ImportFileArray['path']);
-            
+
+            if (str_contains($request->file('csv_file')->getClientMimeType(), 'excel')) 
+            {
+                Excel::import($this->modelImport, $this->ImportFileArray['path']);
+            }
+            elseif (str_contains($request->file('csv_file')->getClientMimeType(), 'xml')) 
+            {
+                $xml = XML::import($this->ImportFileArray['path'])->get()->toArray();
+                $this->modelImport->import($xml);
+            }            
+
             $this->ImportFileArray['data'] = json_encode($this->modelImport->getRows());
             $this->ImportFileArray['count'] = $this->modelImport->getRowCount();
-    
+            
             return $this->ImportFileArray;
         }
     }
@@ -48,7 +57,12 @@ trait ImportCSVFile
     protected function validateImportFile()
     {
         return request()->validate([
-            'csv_file' => ['required', 'mimes:csv,txt'],
+            'csv_file' => ['required', $this->getAcceptedMimes()],
             ]);
+    }
+    
+    protected function getAcceptedMimes()
+    {
+        return 'mimes:csv,txt,xml';
     }
 }

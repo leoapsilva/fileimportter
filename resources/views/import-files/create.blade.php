@@ -23,8 +23,8 @@
                                 <label class="col-md-3 control-label" for="model"> {{ __('import-files.model') }} </label>
                                 <div class="col-md-9 {{ $errors->first('model') ? 'form-group has-error' : ''}}">
                                     <select id="model" name="model" class="form-control" required>
-                                        @foreach ($models as $model)
-                                            <option value="{{ $model }}">{{ $model }}</option>
+                                        @foreach ($models as $key => $model)
+                                            <option value="{{ $key }}">{{ $model }}</option>
                                         @endforeach
                                     </select>
                                     @error('model')

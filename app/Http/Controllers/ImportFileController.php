@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ImportFile;
-use App\Imports\ImportCSVFile;
+use App\Imports\FileImporter;
 
 class ImportFileController extends Controller
 {
-    use ImportCSVFile;
+    use FileImporter;
     
-    private $importableModels = ['Customers'];
+    private $importableModels = ['People' => 'People',
+                                 'ShipOrders' => 'Ship Orders'];
 
     /**
      * Display a listing of the resource.

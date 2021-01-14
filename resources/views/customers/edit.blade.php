@@ -25,6 +25,9 @@
                                     <label class="col-md-3 control-label" for="title"> {{ __('customers.title') }} </label>
                                     <div class="col-md-9 {{ $errors->first('title') ? 'form-group has-error' : ''}}">
                                         <input id="title" name="title" type="text" placeholder="" class="form-control" value="{{ old('title', $customer->title) }}">
+                                        @error('title')
+                                        <div class="alert alert-danger"> {{ __($message) }} </div>
+                                        @enderror
                                     </div>
                                 </div>
     
