@@ -4,6 +4,7 @@
     $nav = explode("/", Request::path())[0];
 @endphp 
 
+
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -23,8 +24,8 @@
                                 <label class="col-md-3 control-label" for="model"> {{ __('import-files.model') }} </label>
                                 <div class="col-md-9 {{ $errors->first('model') ? 'form-group has-error' : ''}}">
                                     <select id="model" name="model" class="form-control" required>
-                                        @foreach ($models as $key => $model)
-                                            <option value="{{ $key }}">{{ $model }}</option>
+                                        @foreach ($models as $model)
+                                            <option value="{{ $model['model'] }}">{{ $model['name'] .': '. $model['format'] }}</option>
                                         @endforeach
                                     </select>
                                     @error('model')
@@ -39,7 +40,7 @@
                                 <div class="col-md-9 {{ $errors->first('csv_file') ? 'form-group has-error' : ''}}">
                                     <input id="csv_file" name="csv_file" type="file" placeholder="" class="form-control" required>
                                     @error('csv_file')
-                                    <div class="alert alert-danger"> {{ __($message) }} </div>
+                                        <div class="alert alert-danger"> {{ __($message) }} </div>
                                     @enderror
                                 </div>
                             </div>
