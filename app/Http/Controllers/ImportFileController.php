@@ -2,16 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\FileImportable;
 use Illuminate\Http\Request;
 use App\Models\ImportFile;
-use App\Imports\FileImporter;
 
 class ImportFileController extends Controller
 {
-    use FileImporter;
+    /**
+     * Offers import method
+     */
+    use FileImportable;
     
-    private $importableModels = ['People' => 'People',
-                                 'ShipOrders' => 'Ship Orders'];
+    private $importableModels = [
+                                        [   'model' => 'People',
+                                            'name' => 'People',
+                                            'format' => 'XML',
+                                            'mime' => 'xml'],
+                                        [   'model' => 'ShipOrders',
+                                            'name' => 'Ship Orders',
+                                            'format' => 'XML',
+                                            'mime' => 'xml'],
+                                        [   'model' => 'Customers',
+                                            'name' => 'Customers',
+                                            'format' => 'CSV',
+                                            'mime' => 'excel'],
+                                 ];
 
     /**
      * Display a listing of the resource.
@@ -44,7 +59,7 @@ class ImportFileController extends Controller
         $this->modelName = "App\\Imports\\" . $request->model .'Import';
         $this->modelImport = new $this->modelName;
 
-        ImportFile::create($this->import($request));
+        ImportFile::create($this->import($request, $this->importableModels));
 
         return redirect('/import-files');
     }
@@ -61,4 +76,5 @@ class ImportFileController extends Controller
             'importFile' => $importFile,
         ]);
     }
+
 }

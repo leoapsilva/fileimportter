@@ -3,21 +3,16 @@
 namespace App\Imports;
 
 use App\Models\Person;
-use App\Imports\PhonesImport;
+use App\Imports\TableImportable;
 
 class PeopleImport
 {
-    private $rowCount = 0;
-    private $rows = [];
-    private $phonesImport;
+    use TableImportable;
 
-    public function import(array $array)
+    public function __construct()
     {
-        foreach($array['person'] as $person){
-            $model = $this->model((array)$person);
-            $model::query()->upsert($model->toArray(), $this->uniqueBy());
-            $this->aggregate((array) $person, $model->id);
-        }
+        $this->key = 'person';
+        $this->composites = ['Phones'];
     }
  
     /**
@@ -47,22 +42,5 @@ class PeopleImport
     public function chunkSize(): int
     {
         return 250;
-    }
-
-    public function getRowCount(): int
-    {
-        return $this->rowCount;
-    }
-
-    public function getRows(): array
-    {
-        return $this->rows;
-    }
-
-    public function aggregate(array $row, $id)
-    {
-        $this->phonesImport = new PhonesImport;
-        $this->phonesImport->setId($id);
-        $this->phonesImport->import((array) $row);
     }
 }

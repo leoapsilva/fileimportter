@@ -3,24 +3,18 @@
 namespace App\Imports;
 
 use App\Models\Address;
+use App\Imports\TableImportable;
 
 class AddressesImport
 {
-    private $rowCount = 0;
-    private $rows = [];
-    private $id;
-    
-    public function setId($id)
+    use TableImportable;
+
+    public function __construct()
     {
-        $this->id = $id;
+        $this->key = 'shipto';
+        $this->isKeyElement = true;
     }
 
-    public function import(array $array)
-    {
-        $model = $this->model((array) $array['shipto']);
-        $model::query()->upsert($model->toArray(), $this->uniqueBy());
-    }
- 
     /**
     * @param array $row
     *
@@ -49,16 +43,6 @@ class AddressesImport
     public function chunkSize(): int
     {
         return 250;
-    }
-
-    public function getRowCount(): int
-    {
-        return $this->rowCount;
-    }
-
-    public function getRows(): array
-    {
-        return $this->rows;
     }
 
 }

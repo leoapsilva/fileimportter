@@ -3,26 +3,17 @@
 namespace App\Imports;
 
 use App\Models\Phone;
+use App\Imports\TableImportable;
 
 class PhonesImport
 {
-    private $rowCount = 0;
-    private $rows = [];
-    private $id;
-    
-    public function setId($id)
+    use TableImportable;
+
+    public function __construct()
     {
-        $this->id = $id;
+        $this->key = 'phones';
     }
 
-    public function import(array $array)
-    {
-        foreach($array['phones'] as $item){
-            $model = $this->model((array)$item);
-            $model::query()->upsert($model->toArray(), $this->uniqueBy());
-        }
-    }
- 
     /**
     * @param array $row
     *
@@ -49,15 +40,4 @@ class PhonesImport
     {
         return 250;
     }
-
-    public function getRowCount(): int
-    {
-        return $this->rowCount;
-    }
-
-    public function getRows(): array
-    {
-        return $this->rows;
-    }
-
 }

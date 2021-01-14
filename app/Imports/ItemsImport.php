@@ -3,26 +3,17 @@
 namespace App\Imports;
 
 use App\Models\Item;
+use App\Imports\TableImportable;
 
 class ItemsImport
 {
-    private $rowCount = 0;
-    private $rows = [];
-    private $id;
-    
-    public function setId($id)
+    use TableImportable;
+
+    public function __construct()
     {
-        $this->id = $id;
+        $this->key = 'items';
     }
 
-    public function import(array $array)
-    {
-        foreach($array['items'] as $item){
-            $model = $this->model((array)$item);
-            $model::query()->upsert($model->toArray(), $this->uniqueBy());
-        }
-    }
- 
     /**
     * @param array $row
     *
@@ -35,10 +26,10 @@ class ItemsImport
         $this->rows[] = $row;
 
         return new Item([
-                'title'     => $row['title'],
-                'note'      => $row['note'],
-                'quantity'  => $row['quantity'],
-                'price'     => $row['price'],
+                'title'         => $row['title'],
+                'note'          => $row['note'],
+                'quantity'      => $row['quantity'],
+                'price'         => $row['price'],
                 'ship_order_id' => $this->id,
                 ]);
     }
@@ -51,16 +42,6 @@ class ItemsImport
     public function chunkSize(): int
     {
         return 250;
-    }
-
-    public function getRowCount(): int
-    {
-        return $this->rowCount;
-    }
-
-    public function getRows(): array
-    {
-        return $this->rows;
     }
 
 }
