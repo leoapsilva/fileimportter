@@ -12,7 +12,7 @@ class AddressesImport
     public function __construct()
     {
         $this->key = 'shipto';
-        $this->isKeyElement = true;
+        $this->isSingleElement = true;
     }
 
     /**

@@ -56,10 +56,9 @@ class ImportFileController extends Controller
      */
     public function store(Request $request)
     {
-        $this->modelName = "App\\Imports\\" . $request->model .'Import';
-        $this->modelImport = new $this->modelName;
+        $this->prepareImportFileArray($request);
 
-        ImportFile::create($this->import($request, $this->importableModels));
+        ImportFile::create($this->import($this->importFileArray, $this->importableModels));
 
         return redirect('/import-files');
     }
@@ -77,4 +76,13 @@ class ImportFileController extends Controller
         ]);
     }
 
+    protected function prepareImportFileArray(Request $request)
+    {
+        $this->importFileArray['mime']  = $request->file('csv_file')->getClientMimeType();
+        $this->importFileArray['store'] = $request->file('csv_file')->store('csv');
+        $this->importFileArray['path'] = storage_path('app/public') . '/' . $this->importFileArray['store'];
+        $this->importFileArray['user_id'] = $request->user_id;
+        $this->importFileArray['model'] = $request->model;
+        $this->importFileArray['filename'] = $request->file('csv_file')->getClientOriginalName();
+    }
 }

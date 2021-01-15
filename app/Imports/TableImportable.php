@@ -9,12 +9,12 @@ trait TableImportable
     private $key;
     private $compositeImport = [];
     private $composites = [];
-    private $isKeyElement = false;
+    private $isSingleElement = false;
 
     public function import(array $array)
     {
         if (array_key_exists($this->key, $array)) {
-            if ($this->isKeyElement) {
+            if ($this->isSingleElement) {
                 $model = $this->model((array)$array[$this->key]);
                 $model::query()->upsert($model->toArray(), $this->uniqueBy());
             }
