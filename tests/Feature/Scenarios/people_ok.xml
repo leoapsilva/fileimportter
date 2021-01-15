@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<people>
+	<person>
+		<personid>1</personid>
+		<personname>Name 1</personname>
+		<phones>
+			<phone>2345678</phone>
+			<phone>1234567</phone>
+		</phones>
+	</person>
+	<person>
+		<personid>2</personid>
+		<personname>Name 2</personname>
+		<phones>
+			<phone>4444444</phone>
+		</phones>
+	</person>
+	<person>
+		<personid>3</personid>
+		<personname>Name 3</personname>
+		<phones>
+			<phone>7777777</phone>
+			<phone>8888888</phone>
+		</phones>
+	</person>
+	<person>
+		<personid>4</personid>
+		<personname>Leonardo</personname>
+		<phones>
+			<phone>17 98108.8281</phone>
+			<phone>17 98153.7471</phone>
+		</phones>
+	</person>
+	<person>
+		<personid>5</personid>
+		<personname>Gizele</personname>
+		<phones>
+			<phone>17 98153.7471</phone>
+			<phone>34 3421.6545</phone>
+		</phones>
+	</person>
+</people>
