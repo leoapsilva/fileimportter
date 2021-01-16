@@ -1,0 +1,52 @@
+{
+    "@attributes": null,
+    "person": [
+        {
+            "personid": "1",
+            "personname": "Name 1",
+            "phones": {
+                "phone": [
+                    "2345678",
+                    "1234567"
+                ]
+            }
+        },
+        {
+            "personid": "2",
+            "personname": "Name 2",
+            "phones": {
+                "phone": "4444444"
+            }
+        },
+        {
+            "personid": "3",
+            "personname": "Name 3",
+            "phones": {
+                "phone": [
+                    "7777777",
+                    "8888888"
+                ]
+            }
+        },
+        {
+            "personid": "4",
+            "personname": "Leonardo",
+            "phones": {
+                "phone": [
+                    "17 98108.8281",
+                    "17 98153.7471"
+                ]
+            }
+        },
+        {
+            "personid": "5",
+            "personname": "Gizele",
+            "phones": {
+                "phone": [
+                    "17 98153.7471",
+                    "34 3421.6545"
+                ]
+            }
+        }
+    ]
+}

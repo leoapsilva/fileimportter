@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Imports\FileImportable;
+use App\Imports\FileImporter;
 use Illuminate\Http\Request;
 use App\Models\ImportFile;
 
@@ -11,8 +11,13 @@ class ImportFileController extends Controller
     /**
      * Offers import method
      */
-    use FileImportable;
-    
+    private $fileImporter;
+
+    public function __construct()
+    {
+        $this->fileImporter = new FileImporter;
+    }
+
     private $importableModels = [
                                         [   'model' => 'People',
                                             'name' => 'People',
@@ -57,8 +62,8 @@ class ImportFileController extends Controller
     public function store(Request $request)
     {
         $this->prepareImportFileArray($request);
-
-        ImportFile::create($this->import($this->importFileArray, $this->importableModels));
+        
+        ImportFile::create($this->fileImporter->import($this->importFileArray, $this->importableModels));
 
         return redirect('/import-files');
     }

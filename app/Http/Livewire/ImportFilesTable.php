@@ -12,7 +12,7 @@ class ImportFilesTable extends Component
 
     public $perPage = 5;
     public $sortField = 'created_at';
-    public $sortAsc = true;
+    public $sortAsc = false;
     public $search = '';
 
     public function sortBy($field)

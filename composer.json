@@ -25,7 +25,8 @@
         "laravel/ui": "^3.1",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.5",
+        "spatie/phpunit-snapshot-assertions": "^4.2"
     },
     "config": {
         "optimize-autoloader": true,

@@ -25,6 +25,7 @@ class IsParsedFileImported implements Rule
      */
     public function passes($attribute, $value)
     {
+        //dd(request()->file('csv_file'));
         $this->store = request()->file('csv_file')->store('csv');
         $this->path = storage_path('app/public') . '/' . $this->store;
 

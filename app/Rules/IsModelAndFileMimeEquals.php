@@ -18,10 +18,10 @@ class IsModelAndFileMimeEquals implements Rule
      *
      * @return void
      */
-    public function __construct($importableModels, $model, $importedMime)
+    public function __construct($importableModels, $importedModel, $importedMime)
     {
-        $this->importableModels = collect($importableModels);
-        $this->model = $model;
+        $this->importableModels = $importableModels;
+        $this->importedModel = $importedModel;
         $this->importedMime = $importedMime;
     }
 
@@ -34,7 +34,7 @@ class IsModelAndFileMimeEquals implements Rule
      */
     public function passes($attribute, $value)
     {
-        $this->expectedMime = $this->importableModels->firstWhere('model', $this->model)['mime'];
+        $this->expectedMime = collect($this->importableModels)->firstWhere('model', '=', $this->importedModel)['mime'];
 
         $this->message = "File expected: ". $this->expectedMime . '. Imported: ' . $this->importedMime;
 
