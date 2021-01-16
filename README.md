@@ -24,7 +24,7 @@ Import a CSV file to database using Laravel.
     * Empty fields
 
 * Data table
-    * Search for every fields esasy and reactively (thanks to livewire)
+    * Search for every fields easyly and reactively (thanks to livewire)
     * Choose number of rows per page
     * Order by any field (thanks to livewire)
     
