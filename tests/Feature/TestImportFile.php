@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 
-class TestFileImporter extends TestCase
+class TestImportFile extends TestCase
 {
 
     public function test_user_can_see_import_file_models()
