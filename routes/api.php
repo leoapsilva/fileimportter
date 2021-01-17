@@ -19,7 +19,18 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 // Bonus - middleware('auth:api')->
+
+// ImportFile API
 Route::get( '/import-files', 'Api\ApiImportFileController@index');
 
-// Bonus - middleware('auth:api')->
 Route::get( '/import-files/{id}', 'Api\ApiImportFileController@show');
+
+// People API
+Route::get( '/people', 'Api\ApiPersonController@index');
+
+Route::get( '/people/{id}', 'Api\ApiPersonController@show');
+
+// People API
+Route::get( '/people', 'Api\ApiPersonController@index');
+
+Route::get( '/people/{id}', 'Api\ApiPersonController@show');
