@@ -74,10 +74,10 @@ class ImportFileController extends Controller
      * @param  \App\Models\ImportCustomer  $importFile
      * @return \Illuminate\Http\Response
      */
-    public function show(ImportFile $importFile)
+    public function show($importFile)
     {
-        return view('import-file.show', [
-            'importFile' => $importFile,
+        return view('import-files.show', [
+            'importFile' => ImportFile::findOrFail($importFile),
         ]);
     }
 

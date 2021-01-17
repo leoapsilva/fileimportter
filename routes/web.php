@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ImportFileController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,11 +71,9 @@ Route::post('/import-files', [ImportFileController::class, 'store'])
     ->name('import-files.store')
     ->middleware('auth');
 
-Route::get('/import-files/{customer}', [ImportFileController::class, 'show'])
+Route::get('/import-files/{importfile}', [ImportFileController::class, 'show'])
     ->name('import-files.show')
     ->middleware('auth');
-
-
 
 Auth::routes();
 
