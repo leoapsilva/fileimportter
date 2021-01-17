@@ -18,6 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth:api')->get( '/import-files', 'Api\ApiImportFileApiController@index');
+// Bonus - middleware('auth:api')->
+Route::get( '/import-files', 'Api\ApiImportFileController@index');
 
-Route::middleware('auth:api')->get( '/import-files/{id}', 'Api\ApiImportFileController@show');
+// Bonus - middleware('auth:api')->
+Route::get( '/import-files/{id}', 'Api\ApiImportFileController@show');
