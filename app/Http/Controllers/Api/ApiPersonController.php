@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PersonCollection;
 use App\Http\Resources\PersonResource;
 use App\Models\Person;
 use Illuminate\Http\Request;
@@ -20,8 +21,8 @@ class ApiPersonController extends Controller
         
         //$people = new PersonCollection(Person::all());
         
-        $people = new PersonResource(Person::all());
-        dd($people->toArray(request()));
+        $people = new PersonCollection(Person::with('phones')->get());
+        //dd($people->toArray(request()));
         return response($people, 200);
     }
 
@@ -44,7 +45,7 @@ class ApiPersonController extends Controller
      */
     public function show($id)
     {
-        return Person::findOrFail($id);
+        return new PersonResource(Person::with('phones')->findOrFail($id));
     }
 
     /**
