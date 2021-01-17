@@ -9,4 +9,5 @@ return [
     'user_id' => 'Usuário',
     'count' => 'Registros',
     'model' => 'Tipo',
+    'data' => 'Dados',
 ];

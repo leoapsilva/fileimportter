@@ -9,4 +9,5 @@ return [
     'user_id' => 'User',
     'count' => 'Row Count',
     'model' => 'Model',
+    'data' => 'Data',
 ];
