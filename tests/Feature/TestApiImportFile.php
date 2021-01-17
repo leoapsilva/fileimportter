@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 
-class TestAPiImportFile extends TestCase
+class TestApiImportFile extends TestCase
 {
     public function test_get_all_import_files()
     {
