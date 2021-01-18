@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\PersonCollection;
-use App\Http\Resources\PersonResource;
-use App\Models\Person;
+use App\Http\Resources\ShipOrderCollection;
+use App\Http\Resources\ShipOrderResource;
+use App\Models\ShipOrder;
 use Illuminate\Http\Request;
 
-class ApiPersonController extends Controller
+class ApiShipOrderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +17,9 @@ class ApiPersonController extends Controller
      */
     public function index()
     {
-        $people = new PersonCollection(Person::with('phones')->get());
+        $shipOrder = new ShipOrderCollection(ShipOrder::with('shipTo')->with('items')->get());
 
-        return response($people, 200);
+        return response($shipOrder, 200);
     }
 
     /**
@@ -41,7 +41,7 @@ class ApiPersonController extends Controller
      */
     public function show($id)
     {
-        return new PersonResource(Person::with('phones')->findOrFail($id));
+        return new ShipOrderResource(ShipOrder::with('shipTo')->with('items')->findOrFail($id));
     }
 
     /**

@@ -22,9 +22,11 @@ class PersonResource extends JsonResource
         $phoneResourceToArray = $phoneResource->toArray($request);
         
         return [
-                'personid' => $this->id,
-                'personname' => $this->first_name,
-                'phones' => $phoneResourceToArray,
+                'person' => [
+                            'personid' => $this->id,
+                            'personname' => $this->first_name,
+                            'phones' => $phoneResourceToArray,
+                ]
         ];
     }
 

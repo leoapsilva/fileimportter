@@ -30,7 +30,7 @@ Route::get( '/people', 'Api\ApiPersonController@index');
 
 Route::get( '/people/{id}', 'Api\ApiPersonController@show');
 
-// People API
-Route::get( '/people', 'Api\ApiPersonController@index');
+// ShipOrder API
+Route::get( '/ship-orders', 'Api\ApiShipOrderController@index');
 
-Route::get( '/people/{id}', 'Api\ApiPersonController@show');
+Route::get( '/ship-orders/{id}', 'Api\ApiShipOrderController@show');
