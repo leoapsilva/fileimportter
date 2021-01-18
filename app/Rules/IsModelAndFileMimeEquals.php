@@ -3,6 +3,7 @@
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Support\Facades\Log;
 
 class IsModelAndFileMimeEquals implements Rule
 {
@@ -34,12 +35,15 @@ class IsModelAndFileMimeEquals implements Rule
      */
     public function passes($attribute, $value)
     {
-        $this->expectedMime = collect($this->importableModels)->firstWhere('model', '=', $this->importedModel)['mime'];
+        Log::emergency('message ' . $this->importableModels);
+        return true;
+        
+/*         $this->expectedMime = collect($this->importableModels)->firstWhere('model', '=', $this->importedModel)['mime'];
 
         $this->message = "File expected: ". $this->expectedMime . '. Imported: ' . $this->importedMime;
 
         return str_contains($this->importedMime, $this->expectedMime);
-    }
+ */    }
 
     /**
      * Get the validation error message.

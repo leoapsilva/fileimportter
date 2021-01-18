@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Imports\FileImporter;
+use App\Jobs\ProcessFileImport;
 use Illuminate\Http\Request;
 use App\Models\ImportFile;
+use Illuminate\Support\Facades\Log;
 
 class ImportFileController extends Controller
 {
@@ -12,6 +14,8 @@ class ImportFileController extends Controller
      * Offers import method
      */
     private $fileImporter;
+
+    private $jobId;
 
     public function __construct()
     {
@@ -62,8 +66,10 @@ class ImportFileController extends Controller
     public function store(Request $request)
     {
         $this->prepareImportFileArray($request);
+
+        $this->importSynch();
         
-        ImportFile::create($this->fileImporter->import($this->importFileArray, $this->importableModels));
+        $this->dispatchJobAsynch();
 
         return redirect('/import-files');
     }
@@ -81,13 +87,36 @@ class ImportFileController extends Controller
         ]);
     }
 
+    protected function importSynch()
+    {
+        if ($this->importFileArray['process'] === "synch")
+        {
+            ImportFile::create($this->fileImporter->import($this->importFileArray, $this->importableModels));   
+        }
+    }
+
+    protected function dispatchJobAsynch()
+    {
+        if ($this->importFileArray['process'] === "job-asynch")
+        {
+            $importFileJob = ImportFile::create($this->importFileArray);   
+
+            // Dispatching Job
+            $this->jobId = ProcessFileImport::dispatch($this->importFileArray, $this->importableModels, $importFileJob);
+        }
+    }
+
     protected function prepareImportFileArray(Request $request)
     {
+        $this->importFileArray['process']  = $request->process;
         $this->importFileArray['mime']  = $request->file('csv_file')->getClientMimeType();
         $this->importFileArray['store'] = $request->file('csv_file')->store('csv');
         $this->importFileArray['path'] = storage_path('app/public') . '/' . $this->importFileArray['store'];
         $this->importFileArray['user_id'] = $request->user_id;
         $this->importFileArray['model'] = $request->model;
         $this->importFileArray['filename'] = $request->file('csv_file')->getClientOriginalName();
+        $this->importFileArray['data'] = "";
+        $this->importFileArray['count'] = 0;
+        
     }
 }

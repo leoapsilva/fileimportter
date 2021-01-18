@@ -29,7 +29,7 @@ class PeopleImport
         return  new Person([
                 'id'            => $row['personid'] ,
                 'first_name'    => $row['personname'],
-                'user_id'       => request()->user()->id,
+                'user_id'       => $this->user_id,
             ]);
         
     }

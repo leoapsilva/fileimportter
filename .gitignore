@@ -12,3 +12,5 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 storage/framework/laravel-excel
+resources/views/livewire/import-files-table.blade.php
+.vscode/launch.json

@@ -10,6 +10,8 @@ trait TableImportable
     private $compositeImport = [];
     private $composites = [];
     private $isSingleElement = false;
+    private $user_id;
+    private $id;
 
     public function import(array $array)
     {
@@ -38,6 +40,11 @@ trait TableImportable
         }
     }
 
+    public function setUserId($user_id)
+    {
+        $this->user_id = $user_id;
+    }
+
     public function setId($id)
     {
         $this->id = $id;
@@ -51,5 +58,10 @@ trait TableImportable
     public function getRows(): array
     {
         return $this->rows;
+    }
+
+    public function getKey()
+    {
+        return $this->key;
     }
 }

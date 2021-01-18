@@ -6,12 +6,14 @@ use Maatwebsite\Excel\Facades\Excel;
 use ACFBentveld\XML\XML;
 use App\Rules\IsModelAndFileMimeEquals;
 use App\Rules\IsParsedFileImported;
+use Illuminate\Support\Facades\Log;
 
 class FileImporter
 {
     private $importedFileArray;
     private $importableModels;
     private $modelImport;
+    private $returnedImportedFileArray;
 
     /**
      * Import File and return a array result to log the import
@@ -24,7 +26,7 @@ class FileImporter
 
         $this->setImportableModels($importableModels);
 
-        $this->isModelAndFileMimeEquals();
+        //$this->isModelAndFileMimeEquals();
 
         $this->setModelClassNamespace();
 
@@ -35,7 +37,7 @@ class FileImporter
         $this->importIfXML();
 
         $this->setReturnImportFileArray();
-        
+
         return $this->importedFileArray;
     }
 
@@ -73,18 +75,20 @@ class FileImporter
     {
         if (str_contains($this->importedFileArray['mime'], 'xml')) 
         {
-            $this->checkForParseErrors();
+            //$this->checkForParseErrors();
 
             $xml = XML::import($this->importedFileArray['path'])->get()->toArray();
-
+            
+            $this->modelImport->setUserId($this->importedFileArray['user_id']);
             $this->modelImport->import($xml);
         }
     }
 
     protected function setReturnImportFileArray()
-    {
+    { 
         $this->importedFileArray['data'] = json_encode($this->modelImport->getRows());
         $this->importedFileArray['count'] = $this->modelImport->getRowCount();
+        
     }
 
     /**
@@ -116,7 +120,7 @@ class FileImporter
     protected function checkForParseErrors()
     {
          return request()->validate([
-            'csv_file' => ['required', new IsParsedFileImported ],
+            'csv_file' => ['required', new IsParsedFileImported($this->importedFileArray['path']) ],
             ]);
     }
 

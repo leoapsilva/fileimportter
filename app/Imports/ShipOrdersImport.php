@@ -29,7 +29,7 @@ class ShipOrdersImport
         return  new ShipOrder([
                 'id'            => $row['orderid'],
                 'person_id'     => $row['orderperson'] ,
-                'user_id'       => request()->user()->id,
+                'user_id'       => $this->user_id,
             ]);
     }
 

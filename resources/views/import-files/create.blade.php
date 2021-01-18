@@ -45,6 +45,20 @@
                                 </div>
                             </div>
 
+                            <!-- Synch Process input -->
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="synch"> {{ __('import-files.process') }} </label>
+                                <div class="col-md-9 {{ $errors->first('synch') ? 'form-group has-error' : ''}}">
+                                    <select id="process" name="process" class="form-control" required>
+                                            <option value="job-asynch">{{ __('import-files.job-asynch') }}</option>
+                                            <option value="synch">{{ __('import-files.synch') }}</option>
+                                    </select>
+                                    @error('synch')
+                                    <div class="alert alert-danger"> {{ __($message) }} </div>
+                                    @enderror
+                                </div>
+                            </div>
+
                             <!-- User hidden input-->
                             <input type="hidden" name="user_id" id="user_id" value="{{ Auth::user()->id}}">
                             
