@@ -73,19 +73,31 @@
                                 <div class="row">
                                     <a class="btn" id="show" data-toggle="modal" href='/import-files/{{ $importFile->id }}'><em
                                             class="fa fa-lg fa fa-eye color-blue">&nbsp;</em></a>
-                                            @if ( $importFile->state == "processing")
+                                            @if ( $importFile->status == "started")
                                     <a class="btn" id="show" data-toggle="modal" href='/import-files/{{ $importFile->id }}'><em
                                         class="fa fa-lg fa fa-spinner color-orange">&nbsp;</em></a>
                                             @endif
-                                            @if ( $importFile->state == "finished")
+                                            @if ( $importFile->status == "processing")
+                                    <a class="btn" id="show" data-toggle="modal" href='/import-files/{{ $importFile->id }}'><em
+                                        class="fa fa-lg fa fa-spinner color-orange">&nbsp;</em></a>
+                                            @endif
+                                            @if ( $importFile->status == "finished")
                                     <a class="btn" id="show" data-toggle="modal" href='/import-files/{{ $importFile->id }}'><em
                                         class="fa fa-lg fa fa-check color-teal">&nbsp;</em></a>
                                             @endif
-                                            @if ( $importFile->state == "failed")
+                                            @if ( $importFile->status == "failed")
                                     <a class="btn" id="show" data-toggle="modal" href='/import-files/{{ $importFile->id }}'><em
                                         class="fa fa-lg fa fa-exclamation color-red">&nbsp;</em></a>
                                             @endif
-    
+                                            @if ( $importFile->process == "job-asynch")
+                                    <a class="btn" id="show" data-toggle="modal" href='/import-files/{{ $importFile->id }}'><em
+                                        class="fa fa-lg fa fa-hourglass color-orange">&nbsp;</em></a>
+                                            @endif
+                                            @if ( $importFile->process  == "synch")
+                                    <a class="btn" id="show" data-toggle="modal" href='/import-files/{{ $importFile->id }}'><em
+                                        class="fa fa-lg fa fa-play color-teal">&nbsp;</em></a>
+                                            @endif
+        
                                 </td>
                         </tr>
                         @endforeach

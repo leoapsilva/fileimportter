@@ -11,16 +11,17 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 
 class ProcessFileImport implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $importFile;
-    protected $importFileArray;
+    protected $importFileArray; 
     protected $importableModels;
     protected $fileImporter;
+    protected $importFileJob;
+    protected $importFileResult;
 
     /**
      * Create a new job instance.
@@ -41,43 +42,44 @@ class ProcessFileImport implements ShouldQueue
      */
     public function handle()
     {
+        $this->started();
+
+        $this->processing();
+
+        $this->finished();
+    }
+
+    protected function started()
+    {
+        $this->importFileJob = ImportFile::create($this->importFileArray);   
+    }
+
+    protected function processing()
+    {
+        $this->importFileJob->status = 'processing';
         
-/*          if($this->batch()->cancelled()) {
-            
-            // Update state of batch to user
-            return redirect('/import-files',
-                                ['errors' =>
-                                    [
-                                        'csv_files' => 'erro'
-                                    ]
-                                ]
-            );
+        $this->importFileJob->process = 'job-asynch';
+
+        $this->importFileJob->save();
+
+        $this->importFileResult = $this->fileImporter->import($this->importFileArray, $this->importableModels);
+    }
+    
+    protected function finished()
+    {
+        $this->importFileJob->count = $this->importFileResult['count'];
+        
+        $this->importFileJob->data = $this->importFileResult['data'];
+
+        if ($this->importFileJob->count == 0)  
+        {
+            $this->importFileJob->status = 'failed' ;
         }
- */     
+        else 
+        {
+            $this->importFileJob->status = 'finished';
+        }
 
-        
-
-        $importFileJob = ImportFile::create($this->importFileArray);   
-/*         Log::emergency(__FILE__ . ' ' . __LINE__);
-        Log::emergency(var_dump($importFileJob->id));
- */
-        $importFileResult = $this->fileImporter->import($this->importFileArray, $this->importableModels);
-        
-        /* Log::emergency(__FILE__ . ':' . __LINE__);
-        Log::emergency(var_dump($importFileResult));
-        Log::emergency("======================================================");
-
-        
-        $importFileId = json_decode($importFileResult['data']);
-        Log::emergency(var_dump($importFileId));
-        ImportFile::find($importFileJob->id)->
-         */
-        $importFileJob->count = $importFileResult['count'];
-        
-        $importFileJob->data = $importFileResult['data'];
-
-        $importFileJob->save();
-
-
+        $this->importFileJob->save();
     }
 }

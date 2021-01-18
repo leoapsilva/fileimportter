@@ -11,7 +11,7 @@ return [
     'count' => 'Row Count',
     'model' => 'Model',
     'data' => 'Data',
-    'process_synch' => 'Process',
+    'process' => 'Run',
     'job-asynch' => 'Enqueue',
     'synch' => 'Immediately',
 ];

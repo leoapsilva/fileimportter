@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ImportFileResource;
 use App\Models\ImportFile;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,11 @@ class ApiImportFileController extends Controller
      */
     public function index()
     {
-        $importFiles = ImportFile::all()->toJson(JSON_PRETTY_PRINT);
+        //$importFiles = ImportFile::all()->toJson(JSON_PRETTY_PRINT);
+
+        $importFiles = ImportFileResource::collection(ImportFile::all())
+                            ->sortDesc()
+                            ->toJson(JSON_PRETTY_PRINT);
         return response($importFiles, 200);
     }
 

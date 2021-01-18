@@ -35,15 +35,12 @@ class IsModelAndFileMimeEquals implements Rule
      */
     public function passes($attribute, $value)
     {
-        Log::emergency('message ' . $this->importableModels);
-        return true;
-        
-/*         $this->expectedMime = collect($this->importableModels)->firstWhere('model', '=', $this->importedModel)['mime'];
+        $this->expectedMime = collect($this->importableModels)->firstWhere('model', '=', $this->importedModel)['mime'];
 
         $this->message = "File expected: ". $this->expectedMime . '. Imported: ' . $this->importedMime;
 
         return str_contains($this->importedMime, $this->expectedMime);
- */    }
+    }
 
     /**
      * Get the validation error message.

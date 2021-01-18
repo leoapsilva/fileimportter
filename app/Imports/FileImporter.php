@@ -26,7 +26,7 @@ class FileImporter
 
         $this->setImportableModels($importableModels);
 
-        //$this->isModelAndFileMimeEquals();
+        $this->isModelAndFileMimeEquals();
 
         $this->setModelClassNamespace();
 
@@ -75,7 +75,7 @@ class FileImporter
     {
         if (str_contains($this->importedFileArray['mime'], 'xml')) 
         {
-            //$this->checkForParseErrors();
+            $this->checkForParseErrors();
 
             $xml = XML::import($this->importedFileArray['path'])->get()->toArray();
             
@@ -88,7 +88,7 @@ class FileImporter
     { 
         $this->importedFileArray['data'] = json_encode($this->modelImport->getRows());
         $this->importedFileArray['count'] = $this->modelImport->getRowCount();
-        
+        $this->importedFileArray['status'] = "finished";
     }
 
     /**
@@ -98,9 +98,14 @@ class FileImporter
      */
     protected function validateImportFile()
     {
-        return request()->validate([
+        // Looks like the same issue here and tests with uploads files.
+        // Turning off the validation...
+
+        if ($this->importedFileArray['process'] === "synch") {
+            return request()->validate([
             'csv_file' => ['required', $this->getAcceptedMimes()],
             ]);
+        }
     }
     /**
      * getAcceptedMimes function
@@ -119,9 +124,14 @@ class FileImporter
      */
     protected function checkForParseErrors()
     {
-         return request()->validate([
+        // Looks like the same issue here and tests with uploads files.
+        // Turning off the validation...
+
+        if ($this->importedFileArray['process'] === "synch") {
+            return request()->validate([
             'csv_file' => ['required', new IsParsedFileImported($this->importedFileArray['path']) ],
             ]);
+        }
     }
 
     /**
@@ -132,11 +142,18 @@ class FileImporter
      */
     protected function isModelAndFileMimeEquals()
     {
-        return request()->validate([
-            'csv_file' => ['required', new IsModelAndFileMimeEquals($this->importableModels, 
-                                                                    $this->importedFileArray['model'],
-                                                                    $this->importedFileArray['mime']) ]
+        // Looks like the same issue here and tests with uploads files.
+        // Turning off the validation...
+
+        if ($this->importedFileArray['process'] === "synch") {
+            return request()->validate([
+            'csv_file' => ['required', new IsModelAndFileMimeEquals(
+                $this->importableModels,
+                $this->importedFileArray['model'],
+                $this->importedFileArray['mime']
+            ) ]
         ]);
+        }        
     }
 
 }

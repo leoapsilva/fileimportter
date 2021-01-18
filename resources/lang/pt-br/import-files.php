@@ -11,7 +11,7 @@ return [
     'count' => 'Registros',
     'model' => 'Tipo',
     'data' => 'Dados',
-    'process_synch' => 'Processamento',
+    'process' => 'Processar',
     'job-asynch' => 'Em fila',
     'synch' => 'Imediato',
 ];

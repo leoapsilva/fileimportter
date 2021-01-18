@@ -90,8 +90,12 @@ class ImportFileController extends Controller
     protected function importSynch()
     {
         if ($this->importFileArray['process'] === "synch")
-        {
-            ImportFile::create($this->fileImporter->import($this->importFileArray, $this->importableModels));   
+        {   
+            $importFileJob = ImportFile::create($this->fileImporter->import($this->importFileArray, $this->importableModels));   
+
+            $importFileJob->status = 'finished';
+            $importFileJob->process = 'synch';
+            $importFileJob->save();
         }
     }
 
@@ -117,6 +121,6 @@ class ImportFileController extends Controller
         $this->importFileArray['filename'] = $request->file('csv_file')->getClientOriginalName();
         $this->importFileArray['data'] = "";
         $this->importFileArray['count'] = 0;
-        
+        $this->importFileArray['status'] = "started";
     }
 }
