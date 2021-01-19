@@ -70,7 +70,7 @@ Imports files in CSV and XML files to database using Laravel.
   * Still imports duplicate rows for some models
   
 ## The name
-* "File importer" reminds me  Harry Potter an I'm a fan :P
+* "File importer" reminds me  Harry Potter and I'm a fan :P
 
 ## Thanks
 * Medialoot for free Lumino Theme
