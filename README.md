@@ -12,7 +12,7 @@ Imports files in CSV and XML files to database using Laravel.
     * Create <your_model>Collection class
     * Create Import, Resource e Collection of nested models
     * Bind model and file format 
-    * Let FileImporter Class do its magic!
+    * FileImporter Class does the magic :P
 
 ## Features
 
