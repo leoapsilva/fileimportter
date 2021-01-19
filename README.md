@@ -69,9 +69,11 @@ Imports files in CSV and XML files to database using Laravel.
 * Prevent import duplicated rows 
   * Still imports duplicate rows for some models
   
+## The name
+* "File importer" reminds me  Harry Potter an I'm a fan :P
 
-## 
-# Thanks* Medialoot for free Lumino Theme
+## Thanks
+* Medialoot for free Lumino Theme
   * https://www.medialoot.com/
 * @Maatwebsite for Laravel-Excel
   * https://github.com/maatwebsite/Laravel-Excel
