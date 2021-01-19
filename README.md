@@ -1,5 +1,5 @@
-# importFile
-Import a CSV and XML files to database using Laravel using job and queue.
+# FileImportter
+Imports files in CSV and XML files to database using Laravel.
 
 ## What it does?
 
@@ -71,10 +71,20 @@ Import a CSV and XML files to database using Laravel using job and queue.
   
 
 ## 
-# Thanks
-* Medialoot for free Lumino Theme
+# Thanks* Medialoot for free Lumino Theme
   * https://www.medialoot.com/
 * @Maatwebsite for Laravel-Excel
   * https://github.com/maatwebsite/Laravel-Excel
 * @livewire for Livewire
   * https://github.com/livewire/livewire
+* Youghourta Benali for the helpful tutorial about Jobs and Queues
+  * https://laravel-news.com/laravel-jobs-and-queues-101
+  * He is also author of http://laraveltesting101.com 
+* Great Laravel 8.x documentation
+  * https://laravel.com/docs/8.x/
+* ACFBentveld for XML Import package
+  * https://github.com/ACFBentveld
+* Jeffrey Way from Laracasts
+  * In special for the screencast serie "Laravel From Scratch"
+   (*Laravel 6, but still a great resource of knowledge)
+  * https://laracasts.com/series/laravel-6-from-scratch 
