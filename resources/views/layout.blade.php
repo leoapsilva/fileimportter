@@ -1,3 +1,4 @@
+@auth
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -7,7 +8,7 @@
 
     <meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>ImportCSVs - {{ __("navbar.".$nav)  }}</title>
+	<title>ImportFiles - {{ __("navbar.".$nav)  }}</title>
 	<link href="/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/css/font-awesome.min.css" rel="stylesheet">
 	<link href="/css/datepicker3.css" rel="stylesheet">
@@ -31,7 +32,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span></button>
-                <a class="navbar-brand" href="#"><span>Import</span>CSV</a>
+                <a class="navbar-brand" href="#"><span>Import</span>Files</a>
 
                 <ul class="nav navbar-top-links navbar-right">
             </div>
@@ -97,3 +98,4 @@
 
 </body>
 </html>
+@endauth

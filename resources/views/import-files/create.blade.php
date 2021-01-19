@@ -4,6 +4,7 @@
     $nav = explode("/", Request::path())[0];
 @endphp 
 
+
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -24,7 +25,7 @@
                                 <div class="col-md-9 {{ $errors->first('model') ? 'form-group has-error' : ''}}">
                                     <select id="model" name="model" class="form-control" required>
                                         @foreach ($models as $model)
-                                            <option value="{{ $model }}">{{ $model }}</option>
+                                            <option value="{{ $model['model'] }}">{{ $model['name'] .': '. $model['format'] }}</option>
                                         @endforeach
                                     </select>
                                     @error('model')
@@ -39,6 +40,20 @@
                                 <div class="col-md-9 {{ $errors->first('csv_file') ? 'form-group has-error' : ''}}">
                                     <input id="csv_file" name="csv_file" type="file" placeholder="" class="form-control" required>
                                     @error('csv_file')
+                                        <div class="alert alert-danger"> {{ __($message) }} </div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <!-- Synch Process input -->
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="synch"> {{ __('import-files.process') }} </label>
+                                <div class="col-md-9 {{ $errors->first('synch') ? 'form-group has-error' : ''}}">
+                                    <select id="process" name="process" class="form-control" required>
+                                            <option value="job-asynch">{{ __('import-files.job-asynch') }}</option>
+                                            <option value="synch">{{ __('import-files.synch') }}</option>
+                                    </select>
+                                    @error('synch')
                                     <div class="alert alert-danger"> {{ __($message) }} </div>
                                     @enderror
                                 </div>

@@ -2,15 +2,40 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\FileImporter;
+use App\Jobs\ProcessFileImport;
 use Illuminate\Http\Request;
 use App\Models\ImportFile;
-use App\Imports\ImportCSVFile;
+use Illuminate\Support\Facades\Log;
 
 class ImportFileController extends Controller
 {
-    use ImportCSVFile;
-    
-    private $importableModels = ['Customers'];
+    /**
+     * Offers import method
+     */
+    private $fileImporter;
+
+    private $jobId;
+
+    public function __construct()
+    {
+        $this->fileImporter = new FileImporter;
+    }
+
+    private $importableModels = [
+                                        [   'model' => 'People',
+                                            'name' => 'People',
+                                            'format' => 'XML',
+                                            'mime' => 'xml'],
+                                        [   'model' => 'ShipOrders',
+                                            'name' => 'Ship Orders',
+                                            'format' => 'XML',
+                                            'mime' => 'xml'],
+                                        [   'model' => 'Customers',
+                                            'name' => 'Customers',
+                                            'format' => 'CSV',
+                                            'mime' => 'excel'],
+                                 ];
 
     /**
      * Display a listing of the resource.
@@ -40,10 +65,11 @@ class ImportFileController extends Controller
      */
     public function store(Request $request)
     {
-        $this->modelName = "App\\Imports\\" . $request->model .'Import';
-        $this->modelImport = new $this->modelName;
+        $this->prepareImportFileArray($request);
 
-        ImportFile::create($this->import($request));
+        $this->importSynch();
+        
+        $this->dispatchJobAsynch();
 
         return redirect('/import-files');
     }
@@ -54,10 +80,47 @@ class ImportFileController extends Controller
      * @param  \App\Models\ImportCustomer  $importFile
      * @return \Illuminate\Http\Response
      */
-    public function show(ImportFile $importFile)
+    public function show($importFile)
     {
-        return view('import-file.show', [
-            'importFile' => $importFile,
+        return view('import-files.show', [
+            'importFile' => ImportFile::findOrFail($importFile),
         ]);
+    }
+
+    protected function importSynch()
+    {
+        if ($this->importFileArray['process'] === "synch")
+        {   
+            $importFileJob = ImportFile::create($this->fileImporter->import($this->importFileArray, $this->importableModels));   
+
+            $importFileJob->status = 'finished';
+            $importFileJob->process = 'synch';
+            $importFileJob->save();
+        }
+    }
+
+    protected function dispatchJobAsynch()
+    {
+        if ($this->importFileArray['process'] === "job-asynch")
+        {
+            $importFileJob = ImportFile::create($this->importFileArray);   
+
+            // Dispatching Job
+            $this->jobId = ProcessFileImport::dispatch($this->importFileArray, $this->importableModels, $importFileJob);
+        }
+    }
+
+    protected function prepareImportFileArray(Request $request)
+    {
+        $this->importFileArray['process']  = $request->process;
+        $this->importFileArray['mime']  = $request->file('csv_file')->getClientMimeType();
+        $this->importFileArray['store'] = $request->file('csv_file')->store('csv');
+        $this->importFileArray['path'] = storage_path('app/public') . '/' . $this->importFileArray['store'];
+        $this->importFileArray['user_id'] = $request->user_id;
+        $this->importFileArray['model'] = $request->model;
+        $this->importFileArray['filename'] = $request->file('csv_file')->getClientOriginalName();
+        $this->importFileArray['data'] = "";
+        $this->importFileArray['count'] = 0;
+        $this->importFileArray['status'] = "started";
     }
 }

@@ -20,6 +20,8 @@ class ImportFile extends Model
         'count',
         'data',
         'user_id',
+        'status',
+        'process',
     ];
 
     public static function search($query)
@@ -27,7 +29,10 @@ class ImportFile extends Model
         return empty($query) ? static::query()
             : static::join('users', 'import_files.user_id', '=', 'users.id')
                 ->orwhere('users.name', 'like', '%'.$query.'%')
-                ->orWhere('filename', 'like', '%'.$query.'%');
+                ->orWhere('filename', 'like', '%'.$query.'%')
+                ->orWhere('status', 'like', '%'.$query.'%')
+                ->orWhere('model', 'like', '%'.$query.'%');
+
     }
 
     public function user()
