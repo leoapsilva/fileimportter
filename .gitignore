@@ -14,3 +14,7 @@ yarn-error.log
 storage/framework/laravel-excel
 resources/views/livewire/import-files-table.blade.php
 .vscode/launch.json
+docker-compose/mysql/ib_logfile1
+docker-compose/mysql/ib_logfile101
+docker-compose/mysql/ibdata1
+Dockerfile-orig
