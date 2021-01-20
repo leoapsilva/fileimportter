@@ -58,10 +58,91 @@ Imports files in CSV and XML files to database using Laravel.
 ## Screenshots
 
 
-## Instalation
+## Install & Config & Run
 
+* Prerequisites
+   * Docker and Docker-compose
+     * Choose the better option for you Operating System
+   * Account on docker-hub
 
-## Running
+# Install & Config
+
+1. Clone this project
+2. Create a .env file (you can copy from .env.example)
+3. Edit .env ``APP_URL`` 
+    * On my environment I use ``localhost``
+    * Keep the port ``8000``
+````
+APP_URL=http://localhost::8000
+````
+
+3. Edit .env ``DB_*`` parameters
+
+````
+DB_CONNECTION=mysql
+DB_HOST=your_db_address
+DB_PORT=3306
+DB_DATABASE=fileimportter
+DB_USERNAME=pick_a_user
+DB_PASSWORD=choose_a_password
+````
+
+5. ``DB_PASSWORD`` **cannot be empty otherwise MySQL server will keep restarting!**
+6. Edit .env ``QUEUE_CONNECTION`` 
+````
+QUEUE_CONNECTION=database
+````
+7. Edit ``docker-compose.yml``
+    * Depending on the OS you are executing you could change the volume diretory.
+    * Particularly I struggled with VirutalBox on Win7 and Kitamatic (yeah... It's too 2017, but still works!).
+    * I had to map a directory and then mount on docker VM.
+    * If it is your environment, please refer to this article: 
+    http://support.divio.com/en/articles/646695-how-to-use-a-directory-outside-c-users-with-docker-toolbox-docker-for-windows
+   
+   * Edit app volume to directory where you named on VirtualBox 
+      ````
+       volumes:
+      - your_mapped_directory:/var/www/
+      ```` 
+   * Edit ngix volume to directory where you named on VirtualBox
+   ````
+       volumes:
+      - /home/docker/projects/importcsv/:/var/www/
+      - /home/docker/projects/importcsv/docker-compose/nginx/:/etc/nginx/conf.d/
+   ````
+8. Compile the app image
+    * Use ``docker-compose build app`` on CLI where ``Dockerfile.yml`` and ``docker-compose.yml`` are located.
+    * If you are using VS Code there is a good plugin that helps a lot: ``ms-azuretools.vscode-docker``
+9. If everything works fine, you should see something like this (depending on you environment)
+````
+Creating fileimportter-db    ... done
+Creating fileimportter-nginx ... done
+Creating fileimportter-app   ... done
+```` 
+10. You can check if is running using ``docker-compose ps`` on CLI and you should see
+Check if it is running
+sudo docker-compose ps
+````
+       Name                      Command               State          Ports
+-----------------------------------------------------------------------------------
+fileimportter-app     docker-php-entrypoint php-fpm    Up      9000/tcp
+fileimportter-db      docker-entrypoint.sh mysqld      Up      3306/tcp, 33060/tcp
+fileimportter-nginx   /docker-entrypoint.sh ngin ...   Up      0.0.0.0:8000->80/tcp
+````
+
+11. Open a shell to app and run (or any other way to execute a command)
+``# docker-compose exec app composer update``
+``# docker-compose exec app php artisan key:generate``
+
+12. Now you can open a browser on URL defined on step *3*.
+13. Click on "Register", pick a username and password.
+14. If your have a message like
+``SQLSTATE[HY000] [2002] Connection refused``
+you have to change the address of you database.
+    * Inspect the db container and find its IP address.
+    * On my environment I had this problem and this article helped me to solve the problem:
+    https://laracasts.com/discuss/channels/laravel/dock-laravel-sqlstatehy000-2002-connection-refused
+
 
 ## Future features
 * Undo a file import removing the rows on database
