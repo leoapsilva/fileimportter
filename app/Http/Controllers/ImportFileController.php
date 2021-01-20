@@ -103,10 +103,8 @@ class ImportFileController extends Controller
     {
         if ($this->importFileArray['process'] === "job-asynch")
         {
-            $importFileJob = ImportFile::create($this->importFileArray);   
-
             // Dispatching Job
-            $this->jobId = ProcessFileImport::dispatch($this->importFileArray, $this->importableModels, $importFileJob);
+            $this->jobId = ProcessFileImport::dispatch($this->importFileArray, $this->importableModels);
         }
     }
 
