@@ -58,15 +58,14 @@ Imports files in CSV and XML files to database using Laravel.
 ## Screenshots
 
 
-## Install & Config & Run
+# Install, config and run
 
-* Prerequisites
-   * Docker and Docker-compose
-     * Choose the better option for you Operating System
+## Prerequisites
+   * Docker and Docker-compose installed
+     * Choose the better option for you Operating System and taste
    * Account on docker-hub
 
-# Install & Config
-
+## Steps
 1. Clone this project
 2. Create a .env file (you can copy from .env.example)
 3. Edit .env ``APP_URL`` 
