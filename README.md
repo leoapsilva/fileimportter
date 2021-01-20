@@ -93,7 +93,7 @@ QUEUE_CONNECTION=database
 ````
 7. Edit ``docker-compose.yml``
     * Depending on the OS you are executing you could change the volume diretory.
-    * Particularly I struggled with VirutalBox on Win7 and Kitamatic (yeah... It's too 2017, but still works!).
+    * Particularly I struggled with VirutalBox on Win7 and Kitematic (yeah... It's too 2015, but still works!).
     * I had to map a directory and then mount on docker VM.
     * If it is your environment, please refer to this article: 
     http://support.divio.com/en/articles/646695-how-to-use-a-directory-outside-c-users-with-docker-toolbox-docker-for-windows
