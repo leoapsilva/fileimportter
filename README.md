@@ -55,9 +55,6 @@ Imports files in CSV and XML files to database using Laravel.
     * Choose number of rows per page
     * Order by any field (thanks to livewire)
     
-## Screenshots
-
-
 # Install, config and run
 
 ## Prerequisites
@@ -129,13 +126,27 @@ fileimportter-db      docker-entrypoint.sh mysqld      Up      3306/tcp, 33060/t
 fileimportter-nginx   /docker-entrypoint.sh ngin ...   Up      0.0.0.0:8000->80/tcp
 ````
 
-11. Open a shell to app and run (or any other way to execute a command)
+11. Open a shell (or any other way to execute a command) to app to run composer and generate the key 
 ``# docker-compose exec app composer update``
 ``# docker-compose exec app php artisan key:generate``
 
-12. Now you can open a browser on URL defined on step *3*.
-13. Click on "Register", pick a username and password.
-14. If your have a message like
+12. Start the queue
+``# docker-compose exec app php artisan queue:work``
+
+* This command cannot stop otherwise the job that enqueues a file import will never start or finish.
+* You need to have this shell running this command.
+* When will choose enqueue a file importing you will also see the processing status of the jobs like:
+````
+$ php artisan queue:work
+[2021-01-20 05:20:16][2] Processing: App\Jobs\ProcessFileImport
+[2021-01-20 05:20:16][2] Failed:     App\Jobs\ProcessFileImport
+[2021-01-20 05:22:51][3] Processing: App\Jobs\ProcessFileImport
+[2021-01-20 05:22:51][3] Processed:  App\Jobs\ProcessFileImport
+````
+
+13. Now you can open a browser on URL defined on step *3*.
+14. Click on "Register", pick a username and password.
+15. If your have a message like
 ``SQLSTATE[HY000] [2002] Connection refused``
 you have to change the address of you database.
     * Inspect the db container and find its IP address.
