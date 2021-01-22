@@ -133,9 +133,8 @@ fileimportter-nginx   /docker-entrypoint.sh ngin ...   Up      0.0.0.0:8000->80/
 12. Start the queue
 ``# docker-compose exec app php artisan queue:work``
 
-* This command cannot stop otherwise the job that enqueues a file import will never start or finish.
-* You need to have this shell running this command.
-* When will choose enqueue a file importing you will also see the processing status of the jobs like:
+* This command cannot be stoped otherwise the job that enqueues a file import will never start or finish.
+* When you choose enqueue a file importing you will also see the processing status of the jobs like:
 ````
 $ php artisan queue:work
 [2021-01-20 05:20:16][2] Processing: App\Jobs\ProcessFileImport
